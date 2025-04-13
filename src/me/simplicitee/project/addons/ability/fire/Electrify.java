@@ -28,11 +28,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Electrify extends LightningAbility implements AddonAbility {
-	
+
 	private static final BlockFace[] faces = {BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST};
-	
+
 	private static Set<Block> electrified = new HashSet<>();
-	
+
 	@Attribute(Attribute.COOLDOWN)
 	private long cooldown;
 	@Attribute(Attribute.DURATION)
@@ -43,26 +43,26 @@ public class Electrify extends LightningAbility implements AddonAbility {
 	private int slowness;
 	@Attribute("Weakness")
 	private int weakness;
-	
+
 	private int spread;
 	private Block block;
 	private Location center;
 	private List<PotionEffect> effects = new ArrayList<>();
 	private SoundEffect sound;
-	
+
 	public Electrify(Player player, Block block, boolean direct) {
 		this(player, block, direct, 2);
 	}
 
 	public Electrify(Player player, Block block, boolean direct, int spread) {
 		super(player);
-		
+
 		if (!ProjectAddons.instance.getConfig().getStringList("Properties.MetallicBlocks").contains(block.getType().toString()) && block.getType() != Material.WATER) {
 			return;
 		} else if (electrified.contains(block)) {
 			return;
 		}
-		
+
 		electrified.add(block);
 		this.block = block;
 		this.center = block.getLocation().add(0.5, 0.5, 0.5);
@@ -74,17 +74,17 @@ public class Electrify extends LightningAbility implements AddonAbility {
 		this.spread = spread;
 
 		PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
-		
+
 		effects.add(new PotionEffect(effectAdapter.getSlownessPotionEffectType(), 10, slowness, true, false));
 		effects.add(new PotionEffect(PotionEffectType.WEAKNESS, 10, weakness, true, false));
 		effects.add(new PotionEffect(effectAdapter.getJumpBoostPotionEffectType(), 10, 128, true, false));
-		
+
 		sound = new SoundEffect(Sound.ENTITY_CREEPER_PRIMED, 0.3f, 0.6f, 100);
-		
+
 		if (direct) {
 			bPlayer.addCooldown(this);
 		}
-		
+
 		start();
 	}
 
@@ -94,7 +94,7 @@ public class Electrify extends LightningAbility implements AddonAbility {
 			remove();
 			return;
 		}
-		
+
 		if (!ProjectAddons.instance.getConfig().getStringList("Properties.MetallicBlocks").contains(block.getType().toString()) && block.getType() != Material.WATER) {
 			remove();
 			return;
@@ -107,7 +107,7 @@ public class Electrify extends LightningAbility implements AddonAbility {
 			}
 			spread = 0;
 		}
-		
+
 		for (Entity e : GeneralMethods.getEntitiesAroundPoint(center, 1)) {
 			if (e instanceof LivingEntity) {
 				if (block.getType() == Material.WATER && e.getLocation().getBlock().equals(block)) {
@@ -115,29 +115,29 @@ public class Electrify extends LightningAbility implements AddonAbility {
 				} else if (!e.getLocation().getBlock().equals(block.getRelative(BlockFace.UP))) {
 					continue;
 				}
-				
+
 				LivingEntity living = (LivingEntity) e;
-				
+
 				if (e instanceof Player) {
 					BendingPlayer bp = BendingPlayer.getBendingPlayer((Player) e);
 					if (bp != null && bp.canLightningbend()) {
 						continue;
 					}
 				}
-				
+
 				living.addPotionEffects(effects);
 			}
 		}
-		
+
 		Util.playLightningParticles(center, 1, 0.5, 0.5, 0.5);
-		Util.emitFireLight(center);
+		Util.emitFireLight(center.add(0.5, 1.5, 0.5));
 		sound.play(center);
 	}
-	
+
 	@Override
 	public void remove() {
 		super.remove();
-		
+
 		new BukkitRunnable() {
 
 			@Override
@@ -192,12 +192,12 @@ public class Electrify extends LightningAbility implements AddonAbility {
 	public boolean isEnabled() {
 		return ProjectAddons.instance.getConfig().getBoolean("Abilities.Fire.Electrify.Enabled");
 	}
-	
+
 	@Override
 	public String getDescription() {
 		return "Electrify water and metallic blocks to slow and weaken entities! Entities in electrified water will also take damage! Lightningbenders are immune to the slowness and weakness, but still take damage in water.";
 	}
-	
+
 	@Override
 	public String getInstructions() {
 		return "Right click a block!";

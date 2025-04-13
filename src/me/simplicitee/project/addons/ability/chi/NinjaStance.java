@@ -3,7 +3,10 @@ package me.simplicitee.project.addons.ability.chi;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.ChiAbility;
+import com.projectkorra.projectkorra.ability.CoreAbility;
+import com.projectkorra.projectkorra.ability.StanceAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.chiblocking.WarriorStance;
 import com.projectkorra.projectkorra.util.ActionBar;
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
@@ -17,7 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NinjaStance extends ChiAbility implements AddonAbility{
+public class NinjaStance extends ChiAbility implements AddonAbility, StanceAbility {
 	
 	@Attribute(Attribute.DURATION)
 	private long stealthDuration;
@@ -33,12 +36,12 @@ public class NinjaStance extends ChiAbility implements AddonAbility{
 		if (bPlayer.isOnCooldown(this)) {
 			return;
 		}
-		
-		ChiAbility stance = bPlayer.getStance();
-		if (stance != null) {
-			stance.remove();
+
+		final StanceAbility stance = this.bPlayer.getStance();
+		if (stance instanceof AddonAbility) {
+			((CoreAbility)stance).remove();
 			if (stance instanceof NinjaStance) {
-				bPlayer.setStance(null);
+				this.bPlayer.setStance(null);
 				return;
 			}
 		}
@@ -178,5 +181,10 @@ public class NinjaStance extends ChiAbility implements AddonAbility{
 	
 	public static double getDamageModifier() {
 		return ProjectAddons.instance.getConfig().getDouble("Abilities.Chi.NinjaStance.DamageModifier");
+	}
+
+	@Override
+	public String getStanceName() {
+		return "NinjaStance";
 	}
 }
