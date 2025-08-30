@@ -1,12 +1,13 @@
 package me.simplicitee.project.addons.ability.earth;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.LavaAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.util.DamageHandler;
+import com.projectkorra.projectkorra.util.TempBlock;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.util.AnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -18,15 +19,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.LavaAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.TempBlock;
-
-import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.AnimationBuilder;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class LavaSurge extends LavaAbility implements AddonAbility {
 	
@@ -181,7 +179,7 @@ public class LavaSurge extends LavaAbility implements AddonAbility {
 						((LivingEntity) e).setNoDamageTicks(0);
 						
 						if (burn) {
-							((LivingEntity) e).setFireTicks((int) (burnTime/1000 * 20));
+							e.setFireTicks((int) (burnTime/1000 * 20));
 						}
 						
 						iter.remove();

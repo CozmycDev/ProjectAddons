@@ -1,15 +1,15 @@
 package me.simplicitee.project.addons.ability.fire;
 
-import org.bukkit.FluidCollisionMode;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.FireAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
-
 import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.Util;
+import org.bukkit.FluidCollisionMode;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class Jets extends FireAbility implements AddonAbility {
 	
@@ -102,6 +102,7 @@ public class Jets extends FireAbility implements AddonAbility {
 		}
 		
 		if (!checkHeight()) {
+			player.setAllowFlight(false);
 			player.setFlying(false);
 			player.setGliding(false);
 			return;
@@ -109,11 +110,13 @@ public class Jets extends FireAbility implements AddonAbility {
 		
 		Vector pDirection = null;
 		if (hovering) {
+			player.setAllowFlight(true);
 			player.setFlying(true);
 			player.setGliding(false);
 			player.setVelocity(player.getVelocity().add(new Vector(0, -0.015, 0)));
 			pDirection = new Vector(0, -0.4, 0);
 		} else if (gliding) {
+			player.setAllowFlight(false);
 			player.setGliding(true);
 			player.setFlying(false);
 			Vector velocity = player.getEyeLocation().getDirection().clone().normalize().multiply(flySpeed);
@@ -131,7 +134,8 @@ public class Jets extends FireAbility implements AddonAbility {
 
 		for (int i = 0; i < 4; i++) {
 			Location p = player.getLocation().clone().add(pDirection.clone().multiply(i));
-			playFirebendingParticles(p, 4 - i, 0.3 - (i / 10), 0.04, 0.3 - (i / 10));
+			playFirebendingParticles(p, 4 - i, 0.3 - ((double) i / 10), 0.04, 0.3 - ((double) i / 10));
+			Util.emitFireLight(p);
 		}
 		
 		playFirebendingSound(player.getLocation());
@@ -141,6 +145,7 @@ public class Jets extends FireAbility implements AddonAbility {
 	public void remove() {
 		super.remove();
 		this.flightHandler.removeInstance(player, getName());
+		player.setAllowFlight(false);
 		player.setFallDistance(0);
 		player.setFlySpeed(oSpeed);
 		bPlayer.addCooldown(this);

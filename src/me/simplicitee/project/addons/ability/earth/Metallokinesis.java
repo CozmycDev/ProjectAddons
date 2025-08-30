@@ -1,5 +1,8 @@
 package me.simplicitee.project.addons.ability.earth;
 
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.MetalAbility;
+import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -9,11 +12,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.MetalAbility;
-
-import me.simplicitee.project.addons.ProjectAddons;
 
 public class Metallokinesis extends MetalAbility implements AddonAbility {
 	

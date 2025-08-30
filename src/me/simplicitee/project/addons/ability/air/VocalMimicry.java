@@ -1,16 +1,14 @@
 package me.simplicitee.project.addons.ability.air;
 
-import java.util.HashMap;
-
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.util.SoundAbility;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-
-import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.SoundAbility;
+import java.util.HashMap;
 
 public class VocalMimicry extends SoundAbility implements AddonAbility {
 	

@@ -1,13 +1,25 @@
 package me.simplicitee.project.addons.ability.water;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.function.Predicate;
-
+import com.projectkorra.projectkorra.Element;
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.CoreAbility;
+import com.projectkorra.projectkorra.ability.MultiAbility;
+import com.projectkorra.projectkorra.ability.PlantAbility;
+import com.projectkorra.projectkorra.ability.util.MultiAbilityManager;
+import com.projectkorra.projectkorra.ability.util.MultiAbilityManager.MultiAbilityInfoSub;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.earthbending.EarthArmor;
+import com.projectkorra.projectkorra.util.ActionBar;
+import com.projectkorra.projectkorra.util.ClickType;
+import com.projectkorra.projectkorra.util.DamageHandler;
+import com.projectkorra.projectkorra.util.MovementHandler;
+import com.projectkorra.projectkorra.util.TempArmor;
+import com.projectkorra.projectkorra.util.TempBlock;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.Util;
+import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -26,26 +38,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.projectkorra.Element;
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.CoreAbility;
-import com.projectkorra.projectkorra.ability.MultiAbility;
-import com.projectkorra.projectkorra.ability.PlantAbility;
-import com.projectkorra.projectkorra.ability.util.MultiAbilityManager;
-import com.projectkorra.projectkorra.ability.util.MultiAbilityManager.MultiAbilityInfoSub;
-import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.earthbending.EarthArmor;
-import com.projectkorra.projectkorra.util.ActionBar;
-import com.projectkorra.projectkorra.util.ClickType;
-import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.MovementHandler;
-import com.projectkorra.projectkorra.util.TempArmor;
-import com.projectkorra.projectkorra.util.TempBlock;
-
-import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.Util;
-import net.md_5.bungee.api.ChatColor;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Predicate;
 
 public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbility {
 	
@@ -163,10 +162,12 @@ public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbili
 			this.state = ArmorState.FORMING;
 			this.active = null;
 			this.origin = player.getWorld();
+
+			PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
 			
 			this.effects.add(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 5, swim));
 			this.effects.add(new PotionEffect(PotionEffectType.SPEED, 5, speed));
-			this.effects.add(new PotionEffect(PotionEffectType.JUMP, 5, jump));
+			this.effects.add(new PotionEffect(effectAdapter.getJumpBoostPotionEffectType(), 5, jump));
 			
 			this.requiredPlants = ProjectAddons.instance.getConfig().getInt("Abilities.Water.PlantArmor.RequiredPlants");
 			this.selectRange = ProjectAddons.instance.getConfig().getDouble("Abilities.Water.PlantArmor.SelectRange");
@@ -238,7 +239,7 @@ public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbili
 				durability = maxDurability;
 			}
 			
-			bar.setProgress((double) durability / maxDurability);
+			bar.setProgress(durability / maxDurability);
 			
 			if (bar.getProgress() <= 0.15) {
 				bar.setTitle(ChatColor.DARK_AQUA + "Durability [" + ChatColor.RED    + (int) durability + ChatColor.DARK_AQUA + " / " + (int) maxDurability + "]");
@@ -400,7 +401,7 @@ public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbili
 			this.armor = new TempArmor(player, 72000000L, this, armors);
 			
 			this.bar = Bukkit.createBossBar(ChatColor.DARK_AQUA + "Durability [" + ChatColor.GREEN + durability + ChatColor.DARK_AQUA + " / " + maxDurability + "]", BarColor.GREEN, BarStyle.SOLID);
-			this.bar.setProgress((double) durability / maxDurability);
+			this.bar.setProgress(durability / maxDurability);
 			this.bar.addPlayer(player);
 			
 			MultiAbilityManager.bindMultiAbility(player, "PlantArmor");
@@ -533,7 +534,7 @@ public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbili
 		}
 		
 		for (int i = 0; i < 3; ++i) {
-			Vector ov = GeneralMethods.getOrthogonalVector(direction, (double) (angle + (120 * i)), tRadius);
+			Vector ov = GeneralMethods.getOrthogonalVector(direction, (angle + (120 * i)), tRadius);
 			current.add(ov);
 			GeneralMethods.displayColoredParticle(Util.LEAF_COLOR, current);
 			current.subtract(ov);

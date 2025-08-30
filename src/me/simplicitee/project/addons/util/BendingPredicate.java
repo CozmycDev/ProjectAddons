@@ -1,11 +1,11 @@
 package me.simplicitee.project.addons.util;
 
-import java.util.function.BiPredicate;
-
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element.SubElement;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.CoreAbility;
+
+import java.util.function.BiPredicate;
 
 public final class BendingPredicate {
 

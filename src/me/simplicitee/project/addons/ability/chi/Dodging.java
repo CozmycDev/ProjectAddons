@@ -1,14 +1,12 @@
 package me.simplicitee.project.addons.ability.chi;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.ChiAbility;
 import com.projectkorra.projectkorra.ability.PassiveAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
-
 import me.simplicitee.project.addons.ProjectAddons;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class Dodging extends ChiAbility implements AddonAbility, PassiveAbility {
 

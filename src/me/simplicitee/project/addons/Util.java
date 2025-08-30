@@ -1,8 +1,8 @@
 package me.simplicitee.project.addons;
 
-import org.bukkit.Location;
-
 import com.projectkorra.projectkorra.GeneralMethods;
+import me.simplicitee.project.addons.util.LightManager;
+import org.bukkit.Location;
 
 public final class Util {
 
@@ -16,14 +16,17 @@ public final class Util {
 		int i = (int) Math.round(Math.random() * (lightning.length - 1));
 		GeneralMethods.displayColoredParticle(lightning[i], loc, amount, xOff, yOff, zOff);
 	}
+
+	public static void emitFireLight(Location loc) {
+		boolean enabled = ProjectAddons.instance.getConfig().getBoolean("Properties.Fire.DynamicLight.Enabled");
+		int brightness = ProjectAddons.instance.getConfig().getInt("Properties.Fire.DynamicLight.Brightness");
+		long keepAlive = ProjectAddons.instance.getConfig().getLong("Properties.Fire.DynamicLight.KeepAlive");
+		if (enabled) LightManager.createLight(loc).brightness(brightness).timeUntilFadeout(keepAlive).emit();
+	}
 	
 	public static double clamp(double min, double max, double value) {
 		if (value < min) {
 			return min;
-		} else if (value > max) {
-			return max;
-		} else {
-			return value;
-		}
+		} else return Math.min(value, max);
 	}
 }

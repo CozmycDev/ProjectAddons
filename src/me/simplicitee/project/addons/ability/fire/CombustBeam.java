@@ -1,5 +1,18 @@
 package me.simplicitee.project.addons.ability.fire;
 
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.CombustionAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.util.ActionBar;
+import com.projectkorra.projectkorra.util.DamageHandler;
+import com.projectkorra.projectkorra.util.ParticleEffect;
+import com.projectkorra.projectkorra.util.TempBlock;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.Util;
+import me.simplicitee.project.addons.util.HexColor;
+import me.simplicitee.project.addons.util.SoundEffect;
+import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,21 +22,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.CombustionAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.ActionBar;
-import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
-import com.projectkorra.projectkorra.util.TempBlock;
-
-import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.HexColor;
-import me.simplicitee.project.addons.util.SoundEffect;
 
 public class CombustBeam extends CombustionAbility implements AddonAbility {
 
@@ -115,6 +114,8 @@ public class CombustBeam extends CombustionAbility implements AddonAbility {
 			}
 
 			sound.play(player.getEyeLocation());
+
+			PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
 			
 			if (getStartTime() + maxChargeTime <= System.currentTimeMillis()) {
 				this.chargeTime = maxChargeTime;
@@ -123,7 +124,8 @@ public class CombustBeam extends CombustionAbility implements AddonAbility {
 				this.damage = maxDamage;
 				this.charged = true;
 				GeneralMethods.displayColoredParticle("ff2424", player.getEyeLocation().add(player.getEyeLocation().getDirection().normalize()), 1, 0.4, 0.4, 0.4);
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, 5));
+				Util.emitFireLight(player.getEyeLocation().add(player.getEyeLocation().getDirection().normalize()));
+				player.addPotionEffect(new PotionEffect(effectAdapter.getSlownessPotionEffectType(), 10, 5));
 
 				ActionBar.sendActionBar(ChatColor.RED + "100%", player);
 			} else if (getStartTime() + minChargeTime <= System.currentTimeMillis()) {
@@ -140,7 +142,8 @@ public class CombustBeam extends CombustionAbility implements AddonAbility {
 				
 				HexColor color = new HexColor((int) (255 * percent), 136, 136);
 				GeneralMethods.displayColoredParticle(color.getHexcode(), player.getEyeLocation().add(player.getEyeLocation().getDirection().normalize()), 1, 0.4, 0.4, 0.4);
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, (int) (5 * percent)));
+				Util.emitFireLight(player.getEyeLocation().add(player.getEyeLocation().getDirection().normalize()));
+				player.addPotionEffect(new PotionEffect(effectAdapter.getSlownessPotionEffectType(), 10, (int) (5 * percent)));
 			}
 		} else {
 			if (player.isSneaking()) {
@@ -176,7 +179,8 @@ public class CombustBeam extends CombustionAbility implements AddonAbility {
 				}
 				
 				GeneralMethods.displayColoredParticle("fefefe", curr, 3, 0.1, 0.1, 0.1);
-				
+				Util.emitFireLight(curr);
+
 				if (player.hasPermission("bending.ability.combustbeam.easteregg")) {
 					for (int i = 0; i < 2; i++) {
 						Vector v = GeneralMethods.getOrthogonalVector(direction, rotation + 180 * i, 0.4);
@@ -188,6 +192,7 @@ public class CombustBeam extends CombustionAbility implements AddonAbility {
 						Vector v = GeneralMethods.getOrthogonalVector(direction, rotation + 180 * i, 0.4);
 						Location p = curr.clone().add(v);
 						GeneralMethods.displayColoredParticle("ededed", p);
+						Util.emitFireLight(p);
 					}
 				}
 				

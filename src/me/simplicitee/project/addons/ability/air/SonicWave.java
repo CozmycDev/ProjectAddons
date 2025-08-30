@@ -1,28 +1,24 @@
 package me.simplicitee.project.addons.ability.air;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Note;
-import org.bukkit.Note.Tone;
-import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
-
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
-
 import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.util.HexColor;
 import me.simplicitee.project.addons.util.SoundAbility;
+import org.bukkit.Instrument;
+import org.bukkit.Location;
+import org.bukkit.Note;
+import org.bukkit.Note.Tone;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class SonicWave extends SoundAbility implements AddonAbility {
 
@@ -78,14 +74,14 @@ public class SonicWave extends SoundAbility implements AddonAbility {
 				for (Player p : player.getWorld().getPlayers()) {
 					BendingPlayer bp = BendingPlayer.getBendingPlayer(p);
 					if (bp != null && bp.hasElement(ProjectAddons.instance.getSoundElement())) {
-						p.spawnParticle(Particle.SPELL_MOB_AMBIENT, loc, 1, 0, 0, 0);	
+						ProjectAddons.instance.getParticleAdapter().displayColoredParticles(new HexColor("#000000"), loc, 1, 0, 0, 0, 0.0, 150);
 					}
 					p.playNote(loc, Instrument.FLUTE, Note.sharp(2, Tone.F));
 				}
 				
 				for (Entity e : GeneralMethods.getEntitiesAroundPoint(loc, 0.8)) {
 					if (e instanceof LivingEntity && e.getEntityId() != player.getEntityId()) {
-						((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, duration, amp));
+						((LivingEntity) e).addPotionEffect(ProjectAddons.instance.getPotionEffectAdapter().getNauseaEffect(duration, amp));
 					}
 				}
 			}

@@ -1,40 +1,5 @@
 package me.simplicitee.project.addons;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.entity.EntityToggleGlideEvent;
-import org.bukkit.event.entity.ItemMergeEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 import com.projectkorra.projectkorra.Element.SubElement;
@@ -46,15 +11,10 @@ import com.projectkorra.projectkorra.ability.util.MultiAbilityManager;
 import com.projectkorra.projectkorra.board.BendingBoardManager;
 import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
-import com.projectkorra.projectkorra.event.PlayerBindChangeEvent;
-import com.projectkorra.projectkorra.event.PlayerChangeElementEvent;
-import com.projectkorra.projectkorra.event.PlayerCooldownChangeEvent;
 import com.projectkorra.projectkorra.object.Preset;
 import com.projectkorra.projectkorra.util.ActionBar;
 import com.projectkorra.projectkorra.util.ClickType;
-
 import me.simplicitee.project.addons.ability.air.Deafen;
-import me.simplicitee.project.addons.ability.air.FlightPassive;
 import me.simplicitee.project.addons.ability.air.GaleGust;
 import me.simplicitee.project.addons.ability.air.SonicWave;
 import me.simplicitee.project.addons.ability.air.VocalMimicry;
@@ -88,6 +48,38 @@ import me.simplicitee.project.addons.ability.water.MistShards;
 import me.simplicitee.project.addons.ability.water.PlantArmor;
 import me.simplicitee.project.addons.ability.water.RazorLeaf;
 import me.simplicitee.project.addons.util.BendingPredicate;
+import me.simplicitee.project.addons.util.LightManager;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
+import org.bukkit.event.entity.ItemMergeEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainListener implements Listener {
 	
@@ -283,8 +275,6 @@ public class MainListener implements Listener {
 	public void onAbilityStart(AbilityStartEvent event) {
 		if (BloodGrip.isBloodbent(event.getAbility().getPlayer())) {
 			event.setCancelled(!ProjectAddons.instance.getConfig().getStringList("Abilities.Water.BloodGrip.BasicAbilities").contains(event.getAbility().getName()));
-		} else if (CoreAbility.hasAbility(event.getAbility().getPlayer(), FlightPassive.class) && CoreAbility.getAbility(event.getAbility().getPlayer(), FlightPassive.class).isActive()) {
-			event.setCancelled(ProjectAddons.instance.getConfig().getStringList("Passives.Air.Flying.AbilityBlacklist").contains(event.getAbility().getName()));
 		}
 	}
 	
@@ -471,10 +461,10 @@ public class MainListener implements Listener {
 				player.sendMessage(ProjectAddons.instance.prefix() + ChatColor.RED + " Invalid format, try `@energycolor <color>`");
 			} else {
 				EnergyColor color = EnergyColor.valueOf(args[1].toUpperCase());
-				
+
 				if (color != null) {
 					EnergyBeam.colors.put(player.getUniqueId(), color);
-					player.sendMessage(ProjectAddons.instance.prefix() + ChatColor.GREEN + " Successfully set EnergyBeam color to " + args[1].toLowerCase());	
+					player.sendMessage(ProjectAddons.instance.prefix() + ChatColor.GREEN + " Successfully set EnergyBeam color to " + args[1].toLowerCase());
 				} else {
 					player.sendMessage(ProjectAddons.instance.prefix() + ChatColor.RED + " Unknown color! Try red, blue, yellow, green, purple, orange, indigo, brown, white, or black!");
 				}
@@ -505,8 +495,15 @@ public class MainListener implements Listener {
 	
 	@EventHandler
 	public void onReload(BendingReloadEvent event) {
-		ProjectAddons.instance.config().reload();
-		event.getSender().sendMessage(ProjectAddons.instance.prefix() + " Config reloaded");
+		LightManager.get().restart();
+
+        try {
+            ProjectAddons.instance.config().load(new File(ProjectAddons.instance.getDataFolder(), "project_addons.yml"));
+        } catch (IOException | InvalidConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+
+        event.getSender().sendMessage(ProjectAddons.instance.prefix() + " Config reloaded");
 		
 		new BukkitRunnable() {
 			@Override
@@ -533,29 +530,6 @@ public class MainListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onFlightToggle(PlayerToggleFlightEvent event) {
-		Player player = event.getPlayer();
-		if (!CoreAbility.hasAbility(player, FlightPassive.class)) {
-			return;
-		}
-		
-		FlightPassive passive = CoreAbility.getAbility(player, FlightPassive.class);
-		
-		if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
-			return;
-		} else if (event.isFlying()) {
-			for (ItemStack is : player.getInventory().getContents()) {
-				if (is != null) {
-					event.setCancelled(true);
-					return;
-				}
-			}
-		}
-		
-		passive.fly(event.isFlying());
-	}
-	
-	@EventHandler
 	public void onOffhandToggle(PlayerSwapHandItemsEvent event) {
 		if (event.isCancelled() || event.getMainHandItem().getType() != Material.AIR || event.getOffHandItem().getType() != Material.AIR) {
 			return;
@@ -566,14 +540,6 @@ public class MainListener implements Listener {
 		
 		if (bPlayer == null) { 
 			return;
-		}
-		
-		if (CoreAbility.hasAbility(player, FlightPassive.class)) {
-			FlightPassive passive = CoreAbility.getAbility(player, FlightPassive.class);
-			if (passive.isActive()) {
-				passive.toggleGlide();
-				return;
-			}
 		}
 		
 		if (player.hasPermission("bending.offhandswap")) {

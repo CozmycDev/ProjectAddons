@@ -1,16 +1,15 @@
 package me.simplicitee.project.addons.util;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-
+import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.simplicitee.project.addons.ProjectAddons;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 public class AnimatedBlock {
 	

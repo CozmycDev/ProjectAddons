@@ -1,14 +1,13 @@
 package me.simplicitee.project.addons.util;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+import me.simplicitee.project.addons.util.AnimatedBlock.AnimationStep;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
-import me.simplicitee.project.addons.util.AnimatedBlock.AnimationStep;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AnimationBuilder {
 

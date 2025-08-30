@@ -1,15 +1,13 @@
 package me.simplicitee.project.addons.ability.chi;
 
+import com.projectkorra.projectkorra.ability.ChiAbility;
+import com.projectkorra.projectkorra.ability.PassiveAbility;
+import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import com.projectkorra.projectkorra.ability.ChiAbility;
-import com.projectkorra.projectkorra.ability.PassiveAbility;
-
-import me.simplicitee.project.addons.ProjectAddons;
 
 public class Camouflage extends ChiAbility implements PassiveAbility {
 

@@ -1,6 +1,6 @@
-[![GitHub Pre-Release](https://img.shields.io/github/release-pre/Simplicitee/ProjectAddons.svg)](https://github.com/Simplicitee/ProjectAddons/releases)
-[![Github All Releases](https://img.shields.io/github/downloads/Simplicitee/ProjectAddons/total.svg)](https://github.com/Simplicitee/ProjectAddons/releases)
-![Size](https://img.shields.io/github/repo-size/Simplicitee/ProjectAddons.svg)
+[![GitHub Pre-Release](https://img.shields.io/github/release-pre/CozmycDev/ProjectAddons.svg)](https://github.com/CozmycDev/ProjectAddons/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/CozmycDev/ProjectAddons/total.svg)](https://github.com/CozmycDev/ProjectAddons/releases)
+![Size](https://img.shields.io/github/repo-size/CozmycDev/ProjectAddons.svg)
 ## Abilities
 ### Avatar
 - EnergyBeam

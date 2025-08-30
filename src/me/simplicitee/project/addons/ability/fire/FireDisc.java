@@ -1,5 +1,13 @@
 package me.simplicitee.project.addons.ability.fire;
 
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.FireAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.util.DamageHandler;
+import com.projectkorra.projectkorra.util.TempBlock;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,15 +16,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.FireAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.TempBlock;
-
-import me.simplicitee.project.addons.ProjectAddons;
 
 public class FireDisc extends FireAbility implements AddonAbility {
 	
@@ -52,8 +51,8 @@ public class FireDisc extends FireAbility implements AddonAbility {
 		this.knockback = ProjectAddons.instance.getConfig().getDouble("Abilities.Fire.FireDisc.Knockback");
 		
 		if (bPlayer.isAvatarState()) {
-			this.control = true;
-			this.cooldown = 0;
+			if (ProjectAddons.instance.getConfig().getBoolean("Abilities.Fire.FireDisc.AvatarState.Control")) this.control = true;
+			if (ProjectAddons.instance.getConfig().getBoolean("Abilities.Fire.FireDisc.AvatarState.NoCooldown")) this.cooldown = 0;
 		}
 		
 		bPlayer.addCooldown(this);
@@ -139,6 +138,7 @@ public class FireDisc extends FireAbility implements AddonAbility {
 			for (double theta = 0; theta < 2 * Math.PI; theta += Math.PI / (r * 12)) {
 				Vector ortho = GeneralMethods.getOrthogonalVector(normal, Math.toDegrees(theta), r);
 				playFirebendingParticles(loc.clone().add(ortho), 2, 0.03, 0, 0.03);
+				Util.emitFireLight(loc.clone().add(ortho));
 			}
 		}
 		

@@ -1,5 +1,10 @@
 package me.simplicitee.project.addons.ability.air;
 
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.util.SoundAbility;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Note;
@@ -7,13 +12,6 @@ import org.bukkit.Note.Tone;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-
-import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.SoundAbility;
 
 public class Deafen extends SoundAbility implements AddonAbility {
 

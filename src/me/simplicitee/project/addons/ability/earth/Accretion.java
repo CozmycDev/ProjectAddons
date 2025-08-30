@@ -1,11 +1,14 @@
 package me.simplicitee.project.addons.ability.earth;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.EarthAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import com.projectkorra.projectkorra.util.DamageHandler;
+import com.projectkorra.projectkorra.util.ParticleEffect;
+import com.projectkorra.projectkorra.util.TempBlock;
+import me.simplicitee.project.addons.ProjectAddons;
+import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,18 +19,13 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.EarthAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
-import com.projectkorra.projectkorra.util.TempBlock;
-
-import me.simplicitee.project.addons.ProjectAddons;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class Accretion extends EarthAbility implements AddonAbility {
 	
@@ -170,16 +168,17 @@ public class Accretion extends EarthAbility implements AddonAbility {
 	public void entityCollision(FallingBlock fb, LivingEntity entity) {
 		int duration = 20;
 		int amp = 1;
-		if (entity.hasPotionEffect(PotionEffectType.SLOW)) {
-			PotionEffect effect = entity.getPotionEffect(PotionEffectType.SLOW);
+		PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
+		if (entity.hasPotionEffect(effectAdapter.getSlownessPotionEffectType())) {
+			PotionEffect effect = entity.getPotionEffect(effectAdapter.getSlownessPotionEffectType());
 			
 			duration += effect.getDuration();
 			amp += effect.getAmplifier();
 			
-			entity.removePotionEffect(PotionEffectType.SLOW);
+			entity.removePotionEffect(effectAdapter.getSlownessPotionEffectType());
 		}
 		
-		entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration, amp, true, false));
+		entity.addPotionEffect(new PotionEffect(effectAdapter.getSlownessPotionEffectType(), duration, amp, true, false));
 		DamageHandler.damageEntity(entity, damage, this);
 		fb.remove();
 	}

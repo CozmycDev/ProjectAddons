@@ -1,24 +1,22 @@
 package me.simplicitee.project.addons.ability.fire;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.LightningAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ActionBar;
 import com.projectkorra.projectkorra.util.DamageHandler;
-
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.Util;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class ChargeBolt extends LightningAbility implements AddonAbility {
 	
@@ -67,6 +65,7 @@ public class ChargeBolt extends LightningAbility implements AddonAbility {
 		
 		if (player.isSneaking() && System.currentTimeMillis() > getStartTime() + chargeTime) {
 			Util.playLightningParticles(GeneralMethods.getMainHandLocation(player), 2, 0.1, 0.1, 0.1);
+			Util.emitFireLight(GeneralMethods.getMainHandLocation(player));
 			if (Math.random() < 0.3) {
 				playLightningbendingSound(player.getEyeLocation());
 			}
@@ -220,6 +219,7 @@ public class ChargeBolt extends LightningAbility implements AddonAbility {
 			}
 			
 			Util.playLightningParticles(loc, 1, 0.1, 0.1, 0.1);
+			Util.emitFireLight(loc);
 			if (Math.random() > 0.01) {
 				playLightningbendingSound(loc);
 			}

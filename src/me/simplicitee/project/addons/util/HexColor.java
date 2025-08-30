@@ -100,7 +100,7 @@ public class HexColor {
 		StringBuilder hex = new StringBuilder();
 		
 		for (int i = 0; i < 3; i++) {
-			int first = (int) Math.floor(rgb[i]/16);
+			int first = (int) (double) (rgb[i] / 16);
 			int second = rgb[i]%16;
 			
 			hex.append(VALUES[first]);

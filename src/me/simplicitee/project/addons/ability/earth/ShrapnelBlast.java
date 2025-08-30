@@ -1,14 +1,12 @@
 package me.simplicitee.project.addons.ability.earth;
 
-import java.util.Random;
-
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.MetalAbility;
+import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.MetalAbility;
-
-import me.simplicitee.project.addons.ProjectAddons;
+import java.util.Random;
 
 public class ShrapnelBlast extends MetalAbility implements AddonAbility {
 

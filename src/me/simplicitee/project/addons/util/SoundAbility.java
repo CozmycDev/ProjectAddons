@@ -1,13 +1,11 @@
 package me.simplicitee.project.addons.util;
 
-import org.bukkit.entity.Player;
-
 import com.projectkorra.projectkorra.Element;
 import com.projectkorra.projectkorra.ability.Ability;
 import com.projectkorra.projectkorra.ability.AirAbility;
 import com.projectkorra.projectkorra.ability.SubAbility;
-
 import me.simplicitee.project.addons.ProjectAddons;
+import org.bukkit.entity.Player;
 
 public abstract class SoundAbility extends AirAbility implements SubAbility{
 

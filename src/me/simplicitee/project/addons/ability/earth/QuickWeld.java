@@ -1,19 +1,16 @@
 package me.simplicitee.project.addons.ability.earth;
 
-import java.util.Arrays;
-
+import com.projectkorra.projectkorra.ability.AddonAbility;
+import com.projectkorra.projectkorra.ability.MetalAbility;
+import com.projectkorra.projectkorra.attribute.Attribute;
+import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 
-import com.projectkorra.projectkorra.ability.AddonAbility;
-import com.projectkorra.projectkorra.ability.MetalAbility;
-import com.projectkorra.projectkorra.attribute.Attribute;
-
-import me.simplicitee.project.addons.ProjectAddons;
+import java.util.Arrays;
 
 public class QuickWeld extends MetalAbility implements AddonAbility{
 	
