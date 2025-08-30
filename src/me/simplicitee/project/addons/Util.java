@@ -1,7 +1,7 @@
 package me.simplicitee.project.addons;
 
 import com.projectkorra.projectkorra.GeneralMethods;
-import me.simplicitee.project.addons.util.LightManager;
+import com.projectkorra.projectkorra.util.LightManager;
 import org.bukkit.Location;
 
 public final class Util {
