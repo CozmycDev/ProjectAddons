@@ -6,11 +6,11 @@ import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.MetalAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -145,8 +145,8 @@ public class ShrapnelShot extends MetalAbility implements AddonAbility {
 			remove();
 			return;
 		}
-		
-		ParticleEffect.CRIT.display(nugget.getLocation(), 1);
+
+		nugget.getLocation().getWorld().spawnParticle(Particle.CRIT, nugget.getLocation(), 1, 0.0, 0.0, 0.0, 0.0, null, true);
 		player.getWorld().playSound(nugget.getLocation(), Sound.ENTITY_ARROW_HIT, 0.2f, 1f);
 		double dmg = Util.clamp(0, damage, damage * (nugget.getVelocity().length() / speed));
 		

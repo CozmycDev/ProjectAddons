@@ -7,9 +7,9 @@ import com.projectkorra.projectkorra.ability.ComboAbility;
 import com.projectkorra.projectkorra.ability.util.ComboManager.AbilityInformation;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ClickType;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -75,7 +75,7 @@ public class WeakeningJab extends ChiAbility implements ComboAbility, AddonAbili
 
 	@Override
 	public void progress() {
-		ParticleEffect.DAMAGE_INDICATOR.display(entity.getLocation(), 3, 0.2, 1.0, 0.2, 0.0004);
+		entity.getLocation().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, entity.getLocation(), 3, 0.2, 1.0, 0.2, 0.0004, null, true);
 		if (System.currentTimeMillis() >= getStartTime() + duration) {
 			remove();
 		}

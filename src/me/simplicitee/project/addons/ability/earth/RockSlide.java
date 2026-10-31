@@ -8,9 +8,9 @@ import com.projectkorra.projectkorra.ability.util.ComboManager.AbilityInformatio
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ClickType;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -172,7 +172,7 @@ public class RockSlide extends EarthAbility implements AddonAbility, ComboAbilit
 					blocks.add(fb);
 					
 					if (Math.random() < 0.23) {
-						ParticleEffect.BLOCK_CRACK.display(fb.getLocation(), 2, 0.4, 0.4, 0.4, b.getBlockData());
+						fb.getLocation().getWorld().spawnParticle(Particle.BLOCK, fb.getLocation(), 2, 0.4, 0.4, 0.4, 0.0, b.getBlockData(), true);
 					}
 				}
 			}

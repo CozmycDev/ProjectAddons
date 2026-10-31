@@ -18,7 +18,6 @@ import com.projectkorra.projectkorra.util.TempArmor;
 import com.projectkorra.projectkorra.util.TempBlock;
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.Util;
-import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -163,11 +162,9 @@ public class PlantArmor extends PlantAbility implements AddonAbility, MultiAbili
 			this.active = null;
 			this.origin = player.getWorld();
 
-			PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
-			
 			this.effects.add(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 5, swim));
 			this.effects.add(new PotionEffect(PotionEffectType.SPEED, 5, speed));
-			this.effects.add(new PotionEffect(effectAdapter.getJumpBoostPotionEffectType(), 5, jump));
+			this.effects.add(new PotionEffect(PotionEffectType.JUMP_BOOST, 5, jump));
 			
 			this.requiredPlants = ProjectAddons.instance.getConfig().getInt("Abilities.Water.PlantArmor.RequiredPlants");
 			this.selectRange = ProjectAddons.instance.getConfig().getDouble("Abilities.Water.PlantArmor.SelectRange");

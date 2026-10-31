@@ -5,15 +5,14 @@ import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.HexColor;
 import me.simplicitee.project.addons.util.SoundAbility;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Note;
+import org.bukkit.*;
 import org.bukkit.Note.Tone;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -74,14 +73,14 @@ public class SonicWave extends SoundAbility implements AddonAbility {
 				for (Player p : player.getWorld().getPlayers()) {
 					BendingPlayer bp = BendingPlayer.getBendingPlayer(p);
 					if (bp != null && bp.hasElement(ProjectAddons.instance.getSoundElement())) {
-						ProjectAddons.instance.getParticleAdapter().displayColoredParticles(new HexColor("#000000"), loc, 1, 0, 0, 0, 0.0, 150);
+						loc.getWorld().spawnParticle(Particle.ENTITY_EFFECT, loc, 1, 0.0, 0.0, 0.0, 0.0, Color.fromARGB(150, 0, 0, 0), true);
 					}
 					p.playNote(loc, Instrument.FLUTE, Note.sharp(2, Tone.F));
 				}
 				
 				for (Entity e : GeneralMethods.getEntitiesAroundPoint(loc, 0.8)) {
-					if (e instanceof LivingEntity && e.getEntityId() != player.getEntityId()) {
-						((LivingEntity) e).addPotionEffect(ProjectAddons.instance.getPotionEffectAdapter().getNauseaEffect(duration, amp));
+					if (e instanceof LivingEntity livingEntity && e.getEntityId() != player.getEntityId()) {
+						livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, duration, amp));
 					}
 				}
 			}

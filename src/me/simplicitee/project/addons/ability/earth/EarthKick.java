@@ -6,11 +6,11 @@ import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.EarthAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import com.projectkorra.projectkorra.util.TempBlock;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -122,9 +122,9 @@ public class EarthKick extends EarthAbility implements AddonAbility, Listener{
 				fb.remove();
 				continue;
 			}
-			
-			ParticleEffect.BLOCK_CRACK.display(fb.getLocation(), 3, 0.1, 0.1, 0.1, fb.getBlockData());
-			
+
+			fb.getLocation().getWorld().spawnParticle(Particle.BLOCK, fb.getLocation(), 3, 0.1, 0.1, 0.1, 0.0, fb.getBlockData(), true);
+
 			for (Entity e : GeneralMethods.getEntitiesAroundPoint(fb.getLocation(), 1.5)) {
 				if (e instanceof LivingEntity && e.getEntityId() != player.getEntityId()) {
 					DamageHandler.damageEntity(e, player, damage, this);

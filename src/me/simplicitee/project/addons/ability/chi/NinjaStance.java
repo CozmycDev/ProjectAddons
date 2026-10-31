@@ -9,7 +9,6 @@ import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.chiblocking.WarriorStance;
 import com.projectkorra.projectkorra.util.ActionBar;
 import me.simplicitee.project.addons.ProjectAddons;
-import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -46,13 +45,11 @@ public class NinjaStance extends ChiAbility implements AddonAbility, StanceAbili
 			}
 		}
 
-		PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
-		
 		stealthDuration = ProjectAddons.instance.getConfig().getLong("Abilities.Chi.NinjaStance.Stealth.Duration");
 		stealthChargeTime = ProjectAddons.instance.getConfig().getLong("Abilities.Chi.NinjaStance.Stealth.ChargeTime");
 		stealthCooldown = ProjectAddons.instance.getConfig().getLong("Abilities.Chi.NinjaStance.Stealth.Cooldown");
 		effects.add(new PotionEffect(PotionEffectType.SPEED, 5, ProjectAddons.instance.getConfig().getInt("Abilities.Chi.NinjaStance.SpeedAmplifier") + 1, true, false));
-		effects.add(new PotionEffect(effectAdapter.getJumpBoostPotionEffectType(), 5, ProjectAddons.instance.getConfig().getInt("Abilities.Chi.NinjaStance.JumpAmplifier") + 1, true, false));
+		effects.add(new PotionEffect(PotionEffectType.JUMP_BOOST, 5, ProjectAddons.instance.getConfig().getInt("Abilities.Chi.NinjaStance.JumpAmplifier") + 1, true, false));
 		
 		start();
 		bPlayer.setStance(this);

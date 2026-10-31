@@ -4,9 +4,9 @@ import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.AirAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class Zephyr extends AirAbility implements AddonAbility {
 		for (Entity e : GeneralMethods.getEntitiesAroundPoint(player.getLocation(), radius)) {
 			if (e instanceof LivingEntity && ((LivingEntity) e).getEyeLocation().getY() >= player.getLocation().getY()) {
 				((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 5, 2));
-				ParticleEffect.CLOUD.display(e.getLocation(), 2, 0.3, 0.15, 0.3);
+				e.getLocation().getWorld().spawnParticle(Particle.CLOUD, e.getLocation(), 2, 0.3, 0.15, 0.3, 0.0, null, true);
 			}
 		}
 		
@@ -117,7 +117,7 @@ public class Zephyr extends AirAbility implements AddonAbility {
 	
 	@Override
 	public String getDescription() {
-		return "Use many gental air currents to slow the fall of entities around you, including yourself!";
+		return "Use many gentle air currents to slow the fall of entities around you, including yourself!";
 	}
 	
 	@Override

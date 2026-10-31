@@ -6,9 +6,9 @@ import com.projectkorra.projectkorra.ability.FireAbility;
 import com.projectkorra.projectkorra.ability.util.ComboManager.AbilityInformation;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ClickType;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class TurboJet extends FireAbility implements AddonAbility, ComboAbility 
 		} else {
 			jets = getAbility(player, Jets.class);
 		}
-		ParticleEffect.EXPLOSION_NORMAL.display(player.getLocation(), 1);
+		player.getLocation().getWorld().spawnParticle(Particle.POOF, player.getLocation(), 1, 0.0, 0.0, 0.0, 0.0, null, true);
 		start();
 	}
 

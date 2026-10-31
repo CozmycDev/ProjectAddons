@@ -6,10 +6,10 @@ import com.projectkorra.projectkorra.ability.CombustionAbility;
 import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.Util;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -52,16 +52,17 @@ public class Explode extends CombustionAbility implements AddonAbility {
 		
 		if (player.isSneaking()) {
 			this.center = GeneralMethods.getTargetedLocation(player, range, ElementalAbility.getTransparentMaterials());
-			
-			ParticleEffect.CRIT.display(center, 3, 0.3, 0.3, 0.3);
+
+			center.getWorld().spawnParticle(Particle.CRIT, center, 3, 0.3, 0.3, 0.3, 0.0, null, true);
+
 			Util.emitFireLight(center);
 			player.getWorld().playSound(center, Sound.ENTITY_CREEPER_PRIMED, 0.2f, 8f);
 		} else {
 			if (center != null) {
 				double offset = radius / 2;
 				playFirebendingParticles(center, 7, offset, offset, offset);
-				ParticleEffect.CRIT.display(center, 6, offset, offset, offset);
-				ParticleEffect.EXPLOSION_HUGE.display(center, 1);
+				center.getWorld().spawnParticle(Particle.CRIT, center, 6, offset, offset, offset, 0.0, null, true);
+				center.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, center, 1, 0.0, 0.0, 0.0, 0.0, null, true);
 				player.getWorld().playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 2f, 3f);
 				
 				for (Entity e : GeneralMethods.getEntitiesAroundPoint(center, radius)) {

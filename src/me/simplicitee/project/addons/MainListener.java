@@ -48,7 +48,6 @@ import me.simplicitee.project.addons.ability.water.MistShards;
 import me.simplicitee.project.addons.ability.water.PlantArmor;
 import me.simplicitee.project.addons.ability.water.RazorLeaf;
 import me.simplicitee.project.addons.util.BendingPredicate;
-import me.simplicitee.project.addons.util.LightManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -495,8 +494,6 @@ public class MainListener implements Listener {
 	
 	@EventHandler
 	public void onReload(BendingReloadEvent event) {
-		LightManager.get().restart();
-
         try {
             ProjectAddons.instance.config().load(new File(ProjectAddons.instance.getDataFolder(), "project_addons.yml"));
         } catch (IOException | InvalidConfigurationException e) {

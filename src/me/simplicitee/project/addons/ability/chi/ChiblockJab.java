@@ -8,9 +8,9 @@ import com.projectkorra.projectkorra.ability.ComboAbility;
 import com.projectkorra.projectkorra.ability.util.ComboManager.AbilityInformation;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ClickType;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -77,7 +77,7 @@ public class ChiblockJab extends ChiAbility implements ComboAbility, AddonAbilit
 
 	@Override
 	public void progress() {
-		ParticleEffect.CRIT.display(attacked.getLocation().add(0, 1, 0), 3, 0.2, 1.0, 0.2, 0.04);
+		attacked.getLocation().getWorld().spawnParticle(Particle.CRIT, attacked.getLocation().add(0, 1, 0), 3, 0.2, 1.0, 0.2, 0.04, null, true);
 		if (System.currentTimeMillis() >= getStartTime() + duration) {
 			remove();
 		}

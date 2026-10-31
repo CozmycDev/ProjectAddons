@@ -4,9 +4,9 @@ import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.ChiAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -42,8 +42,8 @@ public class Jab extends ChiAbility implements AddonAbility{
 		if (entity instanceof LivingEntity) {
 			LivingEntity lent = (LivingEntity) entity;
 			uses++;
-			
-			ParticleEffect.END_ROD.display(entity.getLocation().clone().add(0, 1, 0), 4, 0.2, 0.2, 0.2, 0.02);
+
+			entity.getLocation().getWorld().spawnParticle(Particle.END_ROD, entity.getLocation().clone().add(0, 1, 0), 4, 0.2, 0.2, 0.2, 0.02, null, true);
 			if (hand == JabHand.LEFT) {
 				double damage = WeakeningJab.isAffected(lent) ? WeakeningJab.getModifier() : 1;
 				

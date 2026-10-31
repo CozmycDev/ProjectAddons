@@ -10,11 +10,11 @@ import com.projectkorra.projectkorra.util.ActionBar;
 import com.projectkorra.projectkorra.util.BlockSource;
 import com.projectkorra.projectkorra.util.ClickType;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -75,8 +75,8 @@ public class MistShards extends IceAbility implements AddonAbility, ComboAbility
 		if (forming) {
 			Location target = player.getEyeLocation().add(0, 1, 0);
 			cloud.add(GeneralMethods.getDirection(cloud, target).normalize().multiply(0.25));
-			ParticleEffect.CLOUD.display(cloud, 2, 0.04, 0.04, 0.04);
-			
+			cloud.getWorld().spawnParticle(Particle.CLOUD, cloud, 2, 0.04, 0.04, 0.04, 0.0, null, true);
+
 			if (cloud.distance(target) < 0.15) {
 				formed = true;
 				forming = false;
@@ -95,8 +95,8 @@ public class MistShards extends IceAbility implements AddonAbility, ComboAbility
 		
 		if (formed) {
 			cloud = player.getEyeLocation().add(0, 1, 0);
-			ParticleEffect.CLOUD.display(cloud, 2 * icicleCount, 0.3, 0.2, 0.3);
-			
+			cloud.getWorld().spawnParticle(Particle.CLOUD, cloud, 2 * icicleCount, 0.3, 0.2, 0.3, 0.0, null, true);
+
 			for (int i = 0; i < 3; i++) {
 				Iterator<Icicle> iter = icicles.iterator();
 				while (iter.hasNext()) {
@@ -218,7 +218,7 @@ public class MistShards extends IceAbility implements AddonAbility, ComboAbility
 			}
 			
 			GeneralMethods.displayColoredParticle("62bcc0", loc);
-			ParticleEffect.BLOCK_CRACK.display(loc, 1, 0, 0, 0, Material.BLUE_ICE.createBlockData());
+			loc.getWorld().spawnParticle(Particle.BLOCK, loc, 1, 0.0, 0.0, 0.0, 0.0, Material.BLUE_ICE.createBlockData(), true);
 			playIcebendingSound(loc);
 			
 			for (Entity e : GeneralMethods.getEntitiesAroundPoint(loc, 0.4)) {

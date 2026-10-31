@@ -9,7 +9,6 @@ import com.projectkorra.projectkorra.util.DamageHandler;
 import me.simplicitee.project.addons.ProjectAddons;
 import me.simplicitee.project.addons.Util;
 import me.simplicitee.project.addons.util.SoundEffect;
-import me.simplicitee.project.addons.util.versionadapter.PotionEffectAdapter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -73,11 +72,9 @@ public class Electrify extends LightningAbility implements AddonAbility {
 		this.weakness = ProjectAddons.instance.getConfig().getInt("Abilities.Fire.Electrify.Weakness") + 1;
 		this.spread = spread;
 
-		PotionEffectAdapter effectAdapter = ProjectAddons.instance.getPotionEffectAdapter();
-
-		effects.add(new PotionEffect(effectAdapter.getSlownessPotionEffectType(), 10, slowness, true, false));
+		effects.add(new PotionEffect(PotionEffectType.SLOWNESS, 10, slowness, true, false));
 		effects.add(new PotionEffect(PotionEffectType.WEAKNESS, 10, weakness, true, false));
-		effects.add(new PotionEffect(effectAdapter.getJumpBoostPotionEffectType(), 10, 128, true, false));
+		effects.add(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, 128, true, false));
 
 		sound = new SoundEffect(Sound.ENTITY_CREEPER_PRIMED, 0.3f, 0.6f, 100);
 

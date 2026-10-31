@@ -4,11 +4,11 @@ import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.EarthAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import com.projectkorra.projectkorra.util.TempBlock;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -62,13 +62,13 @@ public class Dig extends EarthAbility implements AddonAbility {
 		
 		for (Block block : GeneralMethods.getBlocksAroundPoint(player.getEyeLocation(), 2.4)) {
 			if (isEarthbendable(block)) {
-				ParticleEffect.BLOCK_CRACK.display(block.getLocation().add(0.5, 0.5, 0.5), 5, 0.25, 0.25, 0.25, block.getBlockData());
+				block.getLocation().getWorld().spawnParticle(Particle.BLOCK, block.getLocation().add(0.5, 0.5, 0.5), 5, 0.25, 0.25, 0.25, 0.0, block.getBlockData(), true);
 				new TempBlock(block, Material.AIR).setRevertTime(revertTime);
 			}
 		}
-		
-		ParticleEffect.CRIT.display(player.getEyeLocation(), 7, 0.6, 0.6, 0.6);
-		
+
+		player.getEyeLocation().getWorld().spawnParticle(Particle.CRIT, player.getEyeLocation(), 7, 0.6, 0.6, 0.6, 0.0, null, true);
+
 		player.setGliding(true);
 		player.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(speed));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 5, 1));

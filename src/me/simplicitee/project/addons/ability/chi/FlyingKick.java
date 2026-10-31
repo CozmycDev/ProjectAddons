@@ -8,10 +8,10 @@ import com.projectkorra.projectkorra.ability.util.ComboManager.AbilityInformatio
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.util.ClickType;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.util.ParticleEffect;
 import me.simplicitee.project.addons.ProjectAddons;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -103,8 +103,8 @@ public class FlyingKick extends ChiAbility implements ComboAbility, AddonAbility
 				return;
 			}
 		}
-		
-		ParticleEffect.CRIT_MAGIC.display(player.getLocation(), 3, 0.2, 0.2, 0.2, 0.02);
+
+		player.getLocation().getWorld().spawnParticle(Particle.ENCHANTED_HIT, player.getLocation(), 3, 0.2, 0.2, 0.2, 0.02, null, true);
 		for (Entity entity : GeneralMethods.getEntitiesAroundPoint(player.getLocation(), 2)) {
 			if (affected.contains(entity)) {
 				continue;
