@@ -9,11 +9,14 @@ import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.projectkorra.projectkorra.ability.util.ComboManager;
 import com.projectkorra.projectkorra.ability.util.MultiAbilityManager;
 import com.projectkorra.projectkorra.board.BendingBoardManager;
+import com.projectkorra.projectkorra.chiblocking.AcrobatStance;
+import com.projectkorra.projectkorra.chiblocking.WarriorStance;
 import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
 import com.projectkorra.projectkorra.object.Preset;
 import com.projectkorra.projectkorra.util.ActionBar;
 import com.projectkorra.projectkorra.util.ClickType;
+import com.projectkorra.projectkorra.waterbending.ice.IceBlast;
 import me.simplicitee.project.addons.ability.air.Deafen;
 import me.simplicitee.project.addons.ability.air.GaleGust;
 import me.simplicitee.project.addons.ability.air.SonicWave;
@@ -134,59 +137,59 @@ public class MainListener implements Listener {
 			return;
 		}
 		
-		if (canBend(player, "FireDisc")) {
+		if (ability instanceof FireDisc && canBend(player, ability)) {
 			new FireDisc(player);
-		} else if (canBend(player, "MagmaSlap")) {
+		} else if (ability instanceof MagmaSlap && canBend(player, ability)) {
 			new MagmaSlap(player);
-		} else if (canBend(player, "Shrapnel")) {
+		} else if (ability instanceof ShrapnelShot && canBend(player, ability)) {
 			if (player.isSneaking()) {
 				new ShrapnelBlast(player);
 			} else {
 				new ShrapnelShot(player);
 			}
-		} else if (canBend(player, "NinjaStance")) {
+		} else if (ability instanceof NinjaStance && canBend(player, ability)) {
 			new NinjaStance(player);
-		} else if (canBend(player, "AcrobatStance") || canBend(player, "WarriorStance")) {
+		} else if ((ability instanceof AcrobatStance || ability instanceof WarriorStance) && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, NinjaStance.class)) {
 				CoreAbility.getAbility(player, NinjaStance.class).remove();
 			}
-		} else if (canBend(player, "LavaSurge")) {
+		} else if (ability instanceof LavaSurge && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, LavaSurge.class)) {
 				CoreAbility.getAbility(player, LavaSurge.class).shoot();
 			}
-		} else if (canBend(player, "GaleGust")) {
+		} else if (ability instanceof GaleGust && canBend(player, ability)) {
 			new GaleGust(player);
-		} else if (canBend(player, "Accretion")) {
+		} else if (ability instanceof Accretion && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, Accretion.class)) {
 				CoreAbility.getAbility(player, Accretion.class).shoot();
 			}
-		} else if (canBend(player, "Crumble")) {
+		} else if (ability instanceof Crumble && canBend(player, ability)) {
 			new Crumble(player, ClickType.LEFT_CLICK);
-		} else if (canBend(player, "ArcSpark")) {
+		} else if (ability instanceof ArcSpark && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, ArcSpark.class)) {
 				CoreAbility.getAbility(player, ArcSpark.class).shoot();
 			}
-		} else if (canBend(player, "CombustBeam")) {
+		} else if (ability instanceof CombustBeam && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, CombustBeam.class)) {
 				CoreAbility.getAbility(player, CombustBeam.class).explode();
 			}
-		} else if (canBend(player, "Jets")) {
+		} else if (ability instanceof Jets && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, Jets.class)) {
 				CoreAbility.getAbility(player, Jets.class).clickFunction();
 			} else {
 				new Jets(player);
 			}
-		} else if (canBend(player, "Bulwark")) {
+		} else if (ability instanceof Bulwark && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, Bulwark.class)) {
 				CoreAbility.getAbility(player, Bulwark.class).clickFunction();
 			}
-		} else if (canBend(player, "SonicWave")) {
+		} else if (ability instanceof SonicWave && canBend(player, ability)) {
 			new SonicWave(player);
-		} else if (canBend(player, "ChargeBolt")) {
+		} else if (ability instanceof ChargeBolt && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, ChargeBolt.class)) {
 				CoreAbility.getAbility(player, ChargeBolt.class).bolt();
 			}
-		} else if (canBend(player, "IceBlast", false)) {
+		} else if (ability instanceof IceBlast && canBend(player, ability, false)) {
 			if (CoreAbility.hasAbility(player, MistShards.class)) {
 				CoreAbility.getAbility(player, MistShards.class).clickFunction();
 			}
@@ -227,45 +230,45 @@ public class MainListener implements Listener {
 			return;
 		}
 		
-		if (canBend(player, "EarthKick")) {
+		if (ability instanceof EarthKick && canBend(player, ability)) {
 			new EarthKick(player);
-		} else if (canBend(player, "NinjaStance")) {
+		} else if (ability instanceof NinjaStance && canBend(player, ability)) {
 			if (CoreAbility.hasAbility(player, NinjaStance.class)) {
 				CoreAbility.getAbility(player, NinjaStance.class).beginStealth();
 			}
-		} else if (canBend(player, "EnergyBeam")) {
+		} else if (ability instanceof EnergyBeam && canBend(player, ability)) {
 			new EnergyBeam(player);
-		} else if (canBend(player, "Explode")) {
+		} else if (ability instanceof Explode && canBend(player, ability)) {
 			new Explode(player);
-		} else if (canBend(player, "LavaSurge")) {
+		} else if (ability instanceof LavaSurge && canBend(player, ability)) {
 			new LavaSurge(player);
-		} else if (canBend(player, "QuickWeld")) {
+		} else if (ability instanceof QuickWeld && canBend(player, ability)) {
 			new QuickWeld(player, player.getInventory().getItemInMainHand());
-		} else if (canBend(player, "RazorLeaf")) {
+		} else if (ability instanceof RazorLeaf && canBend(player, ability)) {
 			new RazorLeaf(player, true);
-		} else if (ability.getName().equals("PlantArmor")) {
+		} else if (ability instanceof PlantArmor) {
 			new PlantArmor(player, ClickType.SHIFT_DOWN);
-		} else if (canBend(player, "Zephyr")) {
+		} else if (ability instanceof Zephyr && canBend(player, ability)) {
 			new Zephyr(player);
-		} else if (canBend(player, "Dig")) {
+		} else if (ability instanceof Dig && canBend(player, ability)) {
 			new Dig(player);
-		} else if (canBend(player, "Accretion")) {
+		} else if (ability instanceof Accretion && canBend(player, ability)) {
 			new Accretion(player);
-		} else if (canBend(player, "Crumble")) {
+		} else if (ability instanceof Crumble && canBend(player, ability)) {
 			new Crumble(player, ClickType.SHIFT_UP);
-		} else if (canBend(player, "ArcSpark")) {
+		} else if (ability instanceof ArcSpark && canBend(player, ability)) {
 			new ArcSpark(player);
-		} else if (canBend(player, "CombustBeam")) {
+		} else if (ability instanceof CombustBeam && canBend(player, ability)) {
 			new CombustBeam(player);
-		} else if (canBend(player, "Bulwark")) {
+		} else if (ability instanceof Bulwark && canBend(player, ability)) {
 			new Bulwark(player);
-		} else if (canBend(player, "VocalMimicry")) {
+		} else if (ability instanceof VocalMimicry && canBend(player, ability)) {
 			new VocalMimicry(player);
-		} else if (canBend(player, "Deafen")) {
+		} else if (ability instanceof Deafen && canBend(player, ability)) {
 			new Deafen(player);
-		} else if (canBend(player, "ChargeBolt")) {
+		} else if (ability instanceof ChargeBolt && canBend(player, ability)) {
 			new ChargeBolt(player);
-		} else if (canBend(player, "BloodGrip")) {
+		} else if (ability instanceof BloodGrip && canBend(player, ability)) {
 			new BloodGrip(player, true);
 		}
 	}
@@ -402,7 +405,7 @@ public class MainListener implements Listener {
 				event.setDamage(event.getDamage() * NinjaStance.getDamageModifier());
 			}
 			
-			if (canBend(damager, "Jab")) {
+			if (canBend(damager, Jab.class)) {
 				if (CoreAbility.hasAbility(damager, Jab.class)) {
 					Jab jab = CoreAbility.getAbility(damager, Jab.class);
 					jab.activate(entity, JabHand.RIGHT);
@@ -421,7 +424,7 @@ public class MainListener implements Listener {
 		
 		Player player = event.getPlayer();
 		
-		if (canBend(player, "Electrify")) {
+		if (canBend(player, Electrify.class)) {
 			new Electrify(player, event.getClickedBlock(), true);
 		}
 	}
@@ -433,7 +436,7 @@ public class MainListener implements Listener {
 		Player player = event.getPlayer();
 		Entity entity = event.getRightClicked();
 		
-		if (canBend(player, "Jab")) {
+		if (canBend(player, Jab.class)) {
 			if (CoreAbility.hasAbility(player, Jab.class)) {
 				Jab jab = CoreAbility.getAbility(player, Jab.class);
 				jab.activate(entity, JabHand.LEFT);
@@ -571,18 +574,29 @@ public class MainListener implements Listener {
 		swapped.clear();
 	}
 	
-	private boolean canBend(Player player, String ability) {
+	private boolean canBend(Player player, Class<? extends CoreAbility> ability) {
 		return canBend(player, ability, true);
 	}
 
-	private boolean canBend(Player player, String ability, boolean canbend) {
+	private boolean canBend(Player player, Class<? extends CoreAbility> ability, boolean canbend) {
+		return canBend(player, CoreAbility.getAbility(ability), canbend);
+	}
+
+	private boolean canBend(Player player, CoreAbility ability) {
+		return canBend(player, ability, true);
+	}
+
+	private boolean canBend(Player player, CoreAbility ability, boolean canbend) {
 		BendingPlayer bPlayer = BendingPlayer.getBendingPlayer(player);
-		CoreAbility abil = CoreAbility.getAbility(ability);
-		
-		if (canbend && !bPlayer.canBend(abil)) {
+
+		if (bPlayer == null || ability == null) {
 			return false;
 		}
-		
-		return BendingPredicate.canBend(bPlayer, abil);
+
+		if (canbend && !bPlayer.canBend(ability)) {
+			return false;
+		}
+
+		return BendingPredicate.canBend(bPlayer, ability);
 	}
 }
